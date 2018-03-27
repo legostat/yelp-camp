@@ -1,0 +1,24 @@
+.nav.navbar-default {
+  margin-bottom: 20px;
+}
+
+.thumbnail img {
+  width: 100%;
+}
+
+.thumbnail {
+  padding: 0;
+}
+.delete-form {
+  display: inline;
+}
+
+.login-form {
+  width: 30%; 
+  margin: 25px auto;
+}
+
+#map {
+    height: 400px;
+    width: 100%;
+}
