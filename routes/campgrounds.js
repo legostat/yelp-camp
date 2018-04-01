@@ -36,9 +36,17 @@ router.post('/', middleware.isLoggedIn, function(req, res) {
       req.flash('error', err);
       res.redirect('/campgrounds');
     }
-    var lat = data.results[0].geometry.location.lat;
-    var lng = data.results[0].geometry.location.lng;
-    var location = data.results[0].formatted_address;
+    var lat;
+    var lng;
+    var location;
+    try {
+      lat = data.results[0].geometry.location.lat;
+      lng = data.results[0].geometry.location.lng;
+      location = data.results[0].formatted_address;
+    } catch (error) {
+      req.flash("error", error.message);
+      res.redirect("back");
+    }
     var newCampground = {name: name, price: price, image: image, description: desc, author: author, location: location, lat: lat, lng: lng};
     Campground.create(newCampground, function(err, newlyCreated){
        if(err) {
@@ -81,9 +89,22 @@ router.put('/:id', middleware.checkCampgroundOwnership, function(req, res){
       req.flash('error', err);
       res.redirect('back');
     }
-    var lat = data.results[0].geometry.location.lat;
-    var lng = data.results[0].geometry.location.lng;
-    var location = data.results[0].formatted_address;
+    // console.log(data.results[0]);
+    // if(data.results[0] === undefined) {
+    //   req.flash("error", 'Something went wrong.');
+    //   res.redirect("back");
+    // }
+    var lat;
+    var lng;
+    var location;
+    try {
+      lat = data.results[0].geometry.location.lat;
+      lng = data.results[0].geometry.location.lng;
+      location = data.results[0].formatted_address;
+    } catch (error) {
+      req.flash("error", err.message);
+      res.redirect("back");
+    }
     var newData = {name: req.body.name, image: req.body.image, description: req.body.description, cost: req.body.price, location: location, lat: lat, lng: lng};
     Campground.findByIdAndUpdate(req.params.id, {$set: newData}, function(err, campground){
         if(err){
