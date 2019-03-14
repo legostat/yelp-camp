@@ -18,7 +18,7 @@ var camgroundRoutes = require('./routes/campgrounds'),
 
 mongoose.Promise = global.Promise;
 
-var url = process.env.databaseURL || 'mongodb://localhost/yelp_camp_v14';
+var url = process.env.databaseURL || 'mongodb://localhost/yelp_camp';
 
 mongoose.connect(url, { useMongoClient: true });
 
